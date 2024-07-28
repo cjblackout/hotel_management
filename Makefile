@@ -1,18 +1,32 @@
+# Makefile for HotelManagement project
+
 CXX = g++
-CXXFLAGS = -Iinclude -Wall -std=c++11
-LDFLAGS =
+CXXFLAGS = -Iinclude -Wall -std=c++17
+LDFLAGS = -lwt -lwthttp
 
-SRC = src/Guest.cpp src/Inventory.cpp src/Employee.cpp main.cpp
-OBJ = $(SRC:.cpp=.o)
-EXEC = bin/HotelManagement
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
 
-all: $(EXEC)
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp) main.cpp
+OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES:main.cpp=$(OBJ_DIR)/main.o))
+EXECUTABLE = $(BIN_DIR)/HotelManagement
 
-$(EXEC): $(OBJ)
-	$(CXX) $(OBJ) -o $@ $(LDFLAGS)
+all: $(EXECUTABLE)
 
-%.o: %.cpp
+$(EXECUTABLE): $(OBJECTS) | $(BIN_DIR)
+	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+$(OBJ_DIR)/main.o: main.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BIN_DIR) $(OBJ_DIR):
+	mkdir -p $@
+
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+.PHONY: all clean

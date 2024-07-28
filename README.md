@@ -2,7 +2,7 @@
 
 ## Overview
 
-HotelManagement is a comprehensive C++ application designed to manage hotel guest information, inventory, and employee payroll. This application utilizes object-oriented programming principles to provide a modular and scalable solution for hotel management.
+HotelManagement is a comprehensive C++ application designed to manage hotel guest information, inventory, and employee payroll. This application utilizes object-oriented programming principles to provide a modular and scalable solution for hotel management. Additionally, the application includes a web-based GUI developed using Wt, a C++ library for developing web applications, allowing for easy interaction through a web browser.
 
 ## Directory Structure
 
@@ -12,12 +12,20 @@ HotelManagement/
 ├── include/
 │   ├── Guest.h
 │   ├── Inventory.h
-│   └── Employee.h
+│   ├── Employee.h
+│   └── WtApp.h
 │
 ├── src/
 │   ├── Guest.cpp
 │   ├── Inventory.cpp
-│   └── Employee.cpp
+│   ├── Employee.cpp
+│   └── WtApp.cpp
+│
+├── obj/
+│   └── (compiled object files)
+│
+├── bin/
+│   └── HotelManagement (executable)
 │
 ├── main.cpp
 ├── Makefile
@@ -69,11 +77,24 @@ Handles employee-related information and operations.
   - `updateEmployee()`: Updates employee information
   - `generatePaySlip()`: Generates the payslip for the employee
 
+### WtApp
+Handles the web application using Wt framework.
+
+- **Methods:**
+  - `setupUI()`: Sets up the user interface for the web application.
+  - `createGuestSection()`: Creates the guest management section.
+  - `createInventorySection()`: Creates the inventory management section.
+  - `createEmployeeSection()`: Creates the employee management section.
+
 ## Compilation and Execution
 
 ### Prerequisites
 - C++ Compiler (g++)
 - Make
+- Wt Library
+
+### Installation of Wt Library
+Follow the instructions on the [Wt website](https://www.webtoolkit.eu/wt/download) to install the Wt library on your system.
 
 ### Compilation
 
@@ -88,12 +109,13 @@ make
 After compilation, run the executable:
 
 ```bash
-./HotelManagement
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+./bin/HotelManagement --docroot . --http-address 0.0.0.0 --http-port 8080
 ```
 
 ## Usage
 
-Upon running the application, you will be prompted to interact with the system. Follow the on-screen instructions to manage guests, inventory, and employees.
+Upon running the application, open a web browser and navigate to `http://0.0.0.0:8080`. You will be presented with a web interface to interact with the system. Follow the on-screen instructions to manage guests, inventory, and employees.
 
 ## Contributing
 
@@ -106,3 +128,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contact
 
 For questions or issues, please open an issue on GitHub or contact the project maintainer.
+
+---
+
+By following this README, you should be able to set up and run the HotelManagement application, and use its features through a web interface provided by the Wt framework. If you encounter any issues, refer to the detailed steps and ensure all dependencies are correctly installed.
